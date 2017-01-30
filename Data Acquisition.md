@@ -174,6 +174,38 @@ Since we're looking for the capital of each state, let's use `find_all` to retri
 all_tables = soup.find_all('table')
 ```
 
+Now we have to identify the right table. We filter this by figuring out what the attribute class name is. In chrome, you can check the class name by right click on the table of web page. Then you click "Inspect" and copy the class name. You also go through the output of above command find the class name of right table.
+
+``` python
+right_table=soup.find('table', class_='wikitable sortable plainrowheaders')
+```
+
+We're now going to store the data from the website. We'll grab the first few columns, so we'll initialize a list for each of these here:
+
+``` python
+A=[]
+B=[]
+C=[]
+```
+
+``` python
+for row in right_table.findAll("tr"):
+    cells = row.findAll('td')
+    states=row.findAll('th') 
+    print(row)
+    if len(cells) == 9 or len(cells) == 8: 
+        A.append(cells[0].find(text=True))
+        B.append(states[0].find(text=True))
+        C.append(cells[1].find(text=True))
+```
+
+``` python
+import pandas as pd
+df=pd.DataFrame(A,columns=['Number'])
+df['State/UT']=B
+df['Admin_Capital']=C
+```
+
 
 ## 5.0 Final Words
 
