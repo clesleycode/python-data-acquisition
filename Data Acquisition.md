@@ -69,11 +69,7 @@ There are several ways to extract information from the web. Use of APIs is proba
 
 ## 4.0 Web Scraping
 
-Web Scraping tools are specifically developed for extracting information from websites. These tools are useful for anyone trying to collect some form of data from the Internet. Web Scraping is the new data entry technique that don’t require repetitive typing or copy-pasting.
-
-Web Scraping mostly focuses on the transformation of unstructured data (HTML format) on the web into structured data (database or spreadsheet)
-
-We'll be analyzing data from the Weather Underground, a website for weather information. APIs are great, but there's still a lot of data locked-up without any APIs, so we'll try a web scraping technique. There also isn't an API always neccessarily available. 
+Web Scraping tools are specifically developed for extracting information from websites. Web Scraping mostly focuses on the transformation of unstructured data (HTML format) on the web into structured data (database or spreadsheet).
 
 While performing web scraping, we deal with html tags. Thus, we must have good understanding of them. Below is the basic syntax of HTML:
 
@@ -204,6 +200,36 @@ import pandas as pd
 df=pd.DataFrame(A,columns=['Number'])
 df['State/UT']=B
 df['Admin_Capital']=C
+```
+
+
+## JSONS
+
+Because HTTP is a protocol for transferring text, the data you request through a web API needs to be serialized into a string format, usually in JavaScript Object Notation (JSON). JavaScript objects look quite similar to Python dicts, which makes their string representations easy to interpret:
+
+```
+{ 
+ "name" : "Lesley Cordero",
+ "job" : "Data Scientist",
+ "topics" : [ "data", "science", "data science"] 
+}
+```
+
+Python has a built in `json` module, which we can use as follows:
+
+``` python
+import json
+serialized = """ { 
+ "name" : "Lesley Cordero",
+ "job" : "Data Scientist",
+ "topics" : [ "data", "science", "data science"] 
+} """
+```
+Next, we parse the JSON to create a Python dict, using the json module: 
+ 
+``` python
+deserialized = json.loads(serialized)
+print(deserialized)
 ```
 
 
