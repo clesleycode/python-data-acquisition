@@ -55,39 +55,158 @@ Cool, now we're ready to start!
 
 ## 1.0 Introduction
 
-All data problems begin with a question and end with a narrative construct that provides
-a clear answer. From there, the next step is getting your data. As a Data Scientist, you'll spend an incredible amount of time and skills on acquiring, prepping, cleaning, and normalizing your data. In this tutorial, we'll review some of the best tools used in the rhelm of data acquisition. 
+All data problems begin with a question and end with a narrative construct that provides a clear answer. From there, the next step is getting your data. As a Data Scientist, you'll spend an incredible amount of time and skills on acquiring, prepping, cleaning, and normalizing your data. In this tutorial, we'll review some of the best tools used in the rhelm of data acquisition. 
 
-
-## 2.0 Reading and Writing Files
+## 2.0 Reading, Writing and Handling Data Files
 
 The simplest way of acquiring data is downloading a file - either from a website, straight from your desktop, or elsewhere. Once the data is downloaded, you'll open the files for reading and possible writing. 
-
 
 ### 2.1 CSV files
 
 Very often, you'll have to work with CSV files. A csv file is a comma-separated values file stores tabular data in plain text. 
 
+#### 2.1.1 CSV 
+
+Python has a csv module, which you can utilize to work with CSV files.
+
 ``` python
-from urllib.request import urlretrieve
+import csv
+```
+
+Then, with the following 4 lines, you can print each row
+``` python
+with open('nba.csv', ‘rt') as f:
+	reader = csv.reader(f)
+	for row in reader:
+		print(row)
+```
+Fairly straightforward, but let's see how else we can accomplish this. 
+
+#### 2.1.2 Pandas
+
+Alternatively, you can use Pandas. Pandas is great for working with CSV files because it handles DataFrames. 
+
+We begin by importing the needed libraries: pandas.
+
+``` python
 import pandas as pd
 ```
 
+Then we use pandas to read the CSV file and show the first few rows. 
 ``` python
-url = "https://gist.githubusercontent.com/jhamrick/cfa18fcd3032ba435ec78a194b1447be/raw/4a4052c56161df8e454a61ab5286a769799c64b8/task_data.csv"
-urlretrieve(url, "task_data.csv")
+task_data = pd.read_csv("nba.csv")
+task_data.head()
+```
+As you can see, by using pandas, we're able to fasten the process of viewing our data, as well as view it in a much more readable format. 
+
+### 2.2 JSON
+
+Because HTTP is a protocol for transferring text, the data you request through a web API (which we'll go through soon enough) needs to be serialized into a string format, usually in JavaScript Object Notation (JSON). JavaScript objects look quite similar to Python dicts, which makes their string representations easy to interpret:
+
+```
+{ 
+ "name" : "Lesley Cordero",
+ "job" : "Data Scientist",
+ "topics" : [ "data", "science", "data science"] 
+}
 ```
 
+Python has a built in `json` module, which we can use as follows:
+
 ``` python
-task_data = pd.read_csv("task_data.csv")
-task_data.head()
+import json
+serialized = """ { 
+ "name" : "Lesley Cordero",
+ "job" : "Data Scientist",
+ "topics" : [ "data", "science", "data science"] 
+} """
+```
+Next, we parse the JSON to create a Python dict, using the json module: 
+ 
+``` python
+deserialized = json.loads(serialized)
+print(deserialized)
+```
+
+And we get this output:
+
+```
+{'name': 'Lesley Cordero', 'job': 'Data Scientist', 'topics': ['data', 'science', 'data science']}
 ```
 
 ## 3.0 APIs
 
-There are several ways to extract information from the web. Use of APIs is probably the best way to extract data from a website. Many websites have public APIs providing data feeds via JSON or some other format. There are a number of ways to access these APIs from Python. One easy way is to use the `requests` package. 
+There are several ways to extract information from the web. Use of APIs, Application Program Interfaces, is probably the best way to extract data from a website. APIs are especially great if your data is constantly changing. Many websites have public APIs providing data feeds via JSON or some other format. 
+
+There are a number of ways to access these APIs from Python. In order to get the data, we make a request to a webserver, hence an easy way is to use the `requests` package. 
+
+### 3.1 GET request
+
+There are many different types of requests. The most simplest is a GET request. GET requests are used to retrieve your data. In Python, you can make a get request to get the latest position of the international space station from the `OpenNotify` API.
 
 ``` python
+import requests
+response = requests.get("http://api.open-notify.org/iss-now.json")
+```
+
+If you print `response.status_code`, you'll get 
+
+``` 
+200
+```
+
+Which brings us to status codes. 
+
+### 3.2 Status Codes
+
+What we just printed was a status code of `200`. Status codes are returned with every request made to a web server and indicate what happened with a request. The following are the most common types of status codes:
+
+- `200` - everything worked as planned!
+- `301` - the server is redirecting you to anotehr endpoint (domain).
+- `400` - it means you made a bad request by not sending the right data or some other error.
+- `401` - you're not authenticated, which means you don't have access to the server.
+- `403` - this means access is forbidden. 
+- `404` - whatever you tried to access wasn't found. 
+
+Notice that if we try to access something that doesn't exist, we'll get a `404` error:
+
+``` python
+response = requests.get("http://api.open-notify.org/iss-pass")
+print(response.status_code)
+```
+
+Let's try a get request where the status code returned is `404`. 
+``` python
+response = requests.get("http://api.open-notify.org/iss-pass.json")
+print(response.status_code)
+```
+Like we mentioned before, this indicated a bad request. This is because it requires two parameters, as you can see [here](http://open-notify.org/Open-Notify-API/ISS-Pass-Times/). 
+
+We set these with an optional `params` variable. You can opt to make a dictionary and then pass it into the `requests.get` function, like follows:
+
+``` python 
+parameters = {"lat": 40.71, "lon": -74}
+response = requests.get("http://api.open-notify.org/iss-pass.json", params=parameters)
+```
+
+You can skip the variable portion with the following instead: 
+``` python
+response = requests.get("http://api.open-notify.org/iss-pass.json?lat=40.71&lon=-74")
+```
+
+If you print the content of both of these with `response.content`, you'll get: 
+```
+b'{\n  "message": "success", \n  "request": {\n    "altitude": 100, \n    "datetime": 1441417753, \n    "latitude": 40.71, \n    "longitude": -74.0, \n    "passes": 5\n  }, \n  "response": [\n    {\n      "duration": 329, \n      "risetime": 1441445639\n    }, \n    {\n      "duration": 629, \n      "risetime": 1441451226\n    }, \n    {\n      "duration": 606, \n      "risetime": 1441457027\n    }, \n    {\n      "duration": 542, \n      "risetime": 1441462894\n    }, \n    {\n      "duration": 565, \n      "risetime": 1441468731\n    }\n  ]\n}'
+```
+This is pretty messy, but luckily, we can clean this up into JSON with:
+
+``` python
+data = response.json()
+```
+
+And we get: 
+``` 
+{'response': [{'risetime': 1441456672, 'duration': 369}, {'risetime': 1441462284, 'duration': 626}, {'risetime': 1441468104, 'duration': 581}, {'risetime': 1441474000, 'duration': 482}, {'risetime': 1441479853, 'duration': 509}], 'message': 'success', 'request': {'latitude': 37.78, 'passes': 5, 'longitude': -122.41, 'altitude': 100, 'datetime': 1441417753}}
 ```
 
 ## 4.0 Web Scraping
@@ -204,58 +323,31 @@ right_table=soup.find('table', class_='wikitable sortable plainrowheaders')
 We're now going to store the data from the website. We'll grab the first few columns, so we'll initialize a list for each of these here:
 
 ``` python
-A=[]
-B=[]
-C=[]
+A = []
+B = []
+C = []
 ```
+Next, is to actually grab the needed data and add it to each list. We iterate through the scraped data, row by row:
 
 ``` python
 for row in right_table.findAll("tr"):
     cells = row.findAll('td')
     states=row.findAll('th') 
-    print(row)
     if len(cells) == 9 or len(cells) == 8: 
         A.append(cells[0].find(text=True))
         B.append(states[0].find(text=True))
         C.append(cells[1].find(text=True))
 ```
 
+Here, we actually create the DataFrame with pandas: 
+
 ``` python
 import pandas as pd
-df=pd.DataFrame(A,columns=['Number'])
-df['State/UT']=B
-df['Admin_Capital']=C
+df=pd.DataFrame(A, columns=['Number'])
+df['State/UT'] = B
+df['Admin_Capital'] = C
 ```
 
-
-## JSONS
-
-Because HTTP is a protocol for transferring text, the data you request through a web API needs to be serialized into a string format, usually in JavaScript Object Notation (JSON). JavaScript objects look quite similar to Python dicts, which makes their string representations easy to interpret:
-
-```
-{ 
- "name" : "Lesley Cordero",
- "job" : "Data Scientist",
- "topics" : [ "data", "science", "data science"] 
-}
-```
-
-Python has a built in `json` module, which we can use as follows:
-
-``` python
-import json
-serialized = """ { 
- "name" : "Lesley Cordero",
- "job" : "Data Scientist",
- "topics" : [ "data", "science", "data science"] 
-} """
-```
-Next, we parse the JSON to create a Python dict, using the json module: 
- 
-``` python
-deserialized = json.loads(serialized)
-print(deserialized)
-```
 
 ## 5.0 Final Words
 
