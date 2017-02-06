@@ -56,7 +56,7 @@ This will prompt a session in R! From here, you can install any needed packages.
 
 ```
 install.packages("jsonlite")
-install.packages("") 
+install.packages("httr") 
 install.packages("")
 ```
 
@@ -107,6 +107,8 @@ The simplest way of acquiring data is downloading a file - either from a website
 ### 2.1 CSV files
 
 Very often, you'll have to work with CSV files. A csv file is a comma-separated values file stores tabular data in plain text. 
+
+In the following examples, we'll be working with NBA data, which you can download from [here](https://github.com/ByteAcademyCo/data-acq/blob/master/nba.csv).
 
 #### 2.1.1 CSV 
 
@@ -217,7 +219,7 @@ And to convert this back to JSON, we type:
 ``` R
 toJSON(l, pretty=TRUE)
 ```
-Not too horrible
+Not too horrible!
 
 ## 3.0 APIs
 
@@ -293,6 +295,47 @@ And we get:
 ``` 
 {'response': [{'risetime': 1441456672, 'duration': 369}, {'risetime': 1441462284, 'duration': 626}, {'risetime': 1441468104, 'duration': 581}, {'risetime': 1441474000, 'duration': 482}, {'risetime': 1441479853, 'duration': 509}], 'message': 'success', 'request': {'latitude': 37.78, 'passes': 5, 'longitude': -122.41, 'altitude': 100, 'datetime': 1441417753}}
 ```
+
+### 3.3 APIs with R
+
+So far we've seen APIs with Python. Let's take a look on how you can use R to do some simple API calls. We'll be working with the `httr` library and the EPDB API, which we load in the next three lines:
+
+``` R
+library("httr")
+url  <- "http://api.epdb.eu"
+path <- "eurlex/directory_code"
+```
+
+With `httr`, you can make GET requests, like this:
+``` R
+raw.result <- GET(url=url, path=path)
+```
+If you check out what `raw.result` is, you'll see the following information:
+```
+Response [http://api.epdb.eu/eurlex/directory_code/]
+  Date: 2017-02-06 21:41
+  Status: 200
+  Content-Type: application/json
+  Size: 121 kB
+```
+
+Now let's pull the name entities from this GET request:
+``` R
+names(raw.result)
+```
+
+Which results in, as we'd expect:
+```
+ [1] "url"         "status_code" "headers"     "all_headers" "cookies"    
+ [6] "content"     "date"        "times"       "request"     "handle" 
+```
+
+You can extract each of the entitites above with the `$` character, like this:
+``` R
+raw.result$status_code
+```
+
+which results in a `200` status code!
 
 ## 4.0 Web Scraping
 
@@ -433,6 +476,52 @@ df['State/UT'] = B
 df['Admin_Capital'] = C
 ```
 
+### 4.3 rvest
+
+Now we'll try scraping a website with R. R has a library called `rvest` which allows you scrape the HTML from any webpage. In the following two lines, we call this library and take the HTML with the `read_html` function. 
+
+``` R
+library(rvest)
+movie <- read_html("http://www.imdb.com/title/tt1490017/")
+```
+
+Let's now scape some information from the website. `html_nodes` easily extract pieces out of HTML documents using css selectors while `html_text` extracts attributes, text, and tag name from the HTML. Using these two functions, we can extract the rating for this movie. 
+``` R
+rating <- movie %>%
+	html_nodes("strong span") %>%
+	html_text() %>%
+	as.numeric() 
+```
+And we get:
+```
+[1] 7.8
+```
+
+Next, let's get the cast of the movie:
+``` R
+cast <- movie %>%
+	html_nodes("#titleCast .itemprop span") %>%
+	html_text()
+```
+Which pulls out:
+```
+ [1] "Will Arnett"     "Elizabeth Banks" "Craig Berry"     "Alison Brie"    
+ [5] "David Burrows"   "Anthony Daniels" "Charlie Day"     "Amanda Farinos" 
+ [9] "Keith Ferguson"  "Will Ferrell"    "Will Forte"      "Dave Franco"    
+[13] "Morgan Freeman"  "Todd Hansen"     "Jonah Hill"     
+```
+
+And lastly, we extract the first movie review on the site:
+``` R
+review <- movie %>%
+	html_nodes("#titleUserReviewsTeaser p") %>%
+	html_text()
+```
+
+And here it is!
+``` 
+[1] "I was the only adult who didn't bring kids to the theater and all I can say is that I was leading the clapping when the credits rolled.\"The Lego Movie\" was an awesome, super creative, and extremely satisfying film for all ages- that is, if you have ever played with Legos. Even people that have never bought a Lego set will this enjoy this awesomely humorous and in the end, heartfelt movie.(Notice I am using the word awesome a lot, because one cannot stop singing the \"Everything is awesome\" song played in the movie. Too catchy!)The creators did a wonderful job putting all the classic things about Legos and making a new movie packed with humor.The voice actors were outstanding. You can tell they really enjoyed doing the movie and put in a lot of effort. Liam Neeson was fantastic as the Good Cop/Bad Cop. But the most credit to the success of this movie goes to Will Farrell who played the villain, President Business. He gives such a great effort in this movie which allows you to laugh, smile, and want more Lego awesomeness.I give the Lego movie a big two thumbs up and is by far the best picture I've seen in a few months. Highly recommend this movie to all Lego lovers who have a passion to build and create something awesome, just like the movie makers created this amazingly, AWESOME, film."
+```
 
 ## 5.0 Final Words
 
