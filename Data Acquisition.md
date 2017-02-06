@@ -10,9 +10,14 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958) and [ADI](ht
 	+ [0.2 R & R Studio](#02-r--r-studio)
 	+ [0.3 Virtual Environment](#03-virtual-environment)
 - [1.0 Introduction](#10-introduction)
-- [2.0 Reading and Writing Files](#20-reading-and-writing-files)
+- [2.0 Reading, Writing, and Handling Data Files](#20-reading-writing-and-handling-files)
 	+ [2.1 CSV files](#21-csv-files)
+		* [2.1.1 CSV](#211-csv)
+		* [2.1.2 Pandas](#212-pandas)
+	+ [2.2 JSON](#22-json)
 - [3.0 APIs](#30-apis)
+	+ [3.1 GET request](#31-get-request)
+	+ [3.2 Status Codes](#32-status-codes)
 - [4.0 Web Scraping](#40-web-scraping)
 	+ [4.1 HTML](#41-html)
 	+ [4.2 BeautifulSoup](#42-beautiful-soup)
@@ -27,11 +32,35 @@ This guide was written in Python 3.5 and R 3.2.3.
 
 Download [Python](https://www.python.org/downloads/) and [Pip](https://pip.pypa.io/en/stable/installing/).
 
+Then, on your command line, install the needed modules as follows:
+
+``` 
+pip3 install csv
+pip3 install pandas
+pip3 install json
+pip3 install requests
+pip3 install BeautifulSoup
+```
+
 ### 0.2 R & R Studio
 
 Install [R](https://www.r-project.org/) and [R Studio](https://www.rstudio.com/products/rstudio/download/).
 
-### 0.3 Other
+Next, to install the R packages, cd into your workspace, and enter the following, very simple, command into your bash: 
+
+```
+R
+```
+
+This will prompt a session in R! From here, you can install any needed packages. For the sake of this tutorial, enter the following into your terminal R session:
+
+```
+install.packages("jsonlite")
+install.packages("") 
+install.packages("")
+```
+
+### 0.3 Virtual Environment
 
 If you'd like to work in a virtual environment, you can set it up as follows: 
 ```
@@ -57,7 +86,21 @@ Cool, now we're ready to start!
 
 All data problems begin with a question and end with a narrative construct that provides a clear answer. From there, the next step is getting your data. As a Data Scientist, you'll spend an incredible amount of time and skills on acquiring, prepping, cleaning, and normalizing your data. In this tutorial, we'll review some of the best tools used in the rhelm of data acquisition. 
 
-## 2.0 Reading, Writing and Handling Data Files
+But first, let's go into the differences between Data Acquisition, Preparation, and Cleaning. 
+
+### 1.1 Data Acquisition
+
+Data Acquisition is the process of getting your data, hence the term <i>acquisition</i>. Data doesn't come out of nowhere, so the very first step of any data science problem is going to be getting the data in the first place. 
+
+### 1.2 Data Preparation
+
+Once you have the data, it might not be in the best format to work with. You might have scraped a bunch of data from a website, but need it is the form of a dataframe to work with it in an easier manner. This process is called data preparation - preparing your data in a format that's easiest to form with.
+
+### 1.3 Data Cleaning
+
+Once your data is being stored or handled in a proper manner, that might still not be enough. You might have missing values or values that need normalizing. These inconsistencies that you fix before analysis refers to data cleaning. 
+
+## 2.0 Reading, Writing, and Handling Data Files
 
 The simplest way of acquiring data is downloading a file - either from a website, straight from your desktop, or elsewhere. Once the data is downloaded, you'll open the files for reading and possible writing. 
 
@@ -99,6 +142,14 @@ task_data.head()
 ```
 As you can see, by using pandas, we're able to fasten the process of viewing our data, as well as view it in a much more readable format. 
 
+#### 2.1.3 R Programming
+
+We've just gone through how to read CSV files in Python. But how do you do this in R? Pretty simply, actually. R has built in functions to handle CSV files, so you don't even have to use a library to accomplish what we just did with Python.
+
+``` R
+data <- read.csv("nba.csv")
+```
+
 ### 2.2 JSON
 
 Because HTTP is a protocol for transferring text, the data you request through a web API (which we'll go through soon enough) needs to be serialized into a string format, usually in JavaScript Object Notation (JSON). JavaScript objects look quite similar to Python dicts, which makes their string representations easy to interpret:
@@ -111,7 +162,7 @@ Because HTTP is a protocol for transferring text, the data you request through a
 }
 ```
 
-Python has a built in `json` module, which we can use as follows:
+Python has a module sepcifically for working with JSON, called `json`, which we can use as follows:
 
 ``` python
 import json
@@ -133,6 +184,40 @@ And we get this output:
 ```
 {'name': 'Lesley Cordero', 'job': 'Data Scientist', 'topics': ['data', 'science', 'data science']}
 ```
+
+#### 2.2.1 jsonlite
+
+Now, in R, working with JSON can be a bit more complicated. Unlike Python, R doesn't have a data type that resembles JSON closely (dictionaries in Python). So we have to work with what we do have, which is lists, vectors, and matrices.
+
+Working with the same data from the Python example, we have:
+
+``` python
+serialized = '{ 
+ "name" : "Lesley Cordero",
+ "job" : "Data Scientist",
+ "topics" : [ "data", "science", "data science"] 
+} '
+```
+
+Now, if we want to properly load this into R, we'll be using the `jsonlite` library. 
+
+``` R
+library("jsonlite")
+```
+Once we've loaded the library, we'll use the `fromJSON` function to convert this into a data type R is more familiar with: <b>lists</b>.
+
+``` R
+l <- fromJSON(serialized, simplifyVector=TRUE)
+```
+
+Notice that `simplifyVector` is set to `TRUE`. When simplifyMatrix is enabled, JSON arrays containing equal-length sub-arrays simplify into a matrix. 
+
+And to convert this back to JSON, we type:
+
+``` R
+toJSON(l, pretty=TRUE)
+```
+Not too horrible
 
 ## 3.0 APIs
 
