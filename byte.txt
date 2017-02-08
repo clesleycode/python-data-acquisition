@@ -1,0 +1,8 @@
+Intro to Data Acquisition & Prep
+
+Day 1, 6:00pm-9:00pm:
+	Sections 1.0 - 5.0:
+		- Introduction to topic
+		- CSV & JSON
+		- APIs
+		- Web Scraping
