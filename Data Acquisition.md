@@ -39,7 +39,7 @@ pip3 install csv
 pip3 install pandas
 pip3 install json
 pip3 install requests
-pip3 install BeautifulSoup
+pip3 install BeautifulSoup4
 ```
 
 ### 0.2 R & R Studio
@@ -57,7 +57,7 @@ This will prompt a session in R! From here, you can install any needed packages.
 ```
 install.packages("jsonlite")
 install.packages("httr") 
-install.packages("")
+install.packages("rvest")
 ```
 
 ### 0.3 Virtual Environment
@@ -72,13 +72,7 @@ And then launch it with:
 source your_env/bin/activate
 ```
 
-To execute the visualizations in matplotlib, do the following:
-
-```
-cd ~/.matplotlib
-nano matplotlibrc
-```
-And then, write `backend: TkAgg` in the file. Now you should be set up with your virtual environment!
+Now you should be set up with your virtual environment!
 
 Cool, now we're ready to start! 
 
@@ -94,7 +88,7 @@ Data Acquisition is the process of getting your data, hence the term <i>acquisit
 
 ### 1.2 Data Preparation
 
-Once you have the data, it might not be in the best format to work with. You might have scraped a bunch of data from a website, but need it is the form of a dataframe to work with it in an easier manner. This process is called data preparation - preparing your data in a format that's easiest to form with.
+Once you have the data, it might not be in the best format to work with. You might have scraped a bunch of data from a website, but need it in the form of a dataframe to work with it in an easier manner. This process is called data preparation - preparing your data in a format that's easiest to form with.
 
 ### 1.3 Data Cleaning
 
@@ -524,6 +518,8 @@ And here it is!
 ```
 
 ## 5.0 Final Words
+
+And that's a wrap for the Data Acquisition portion of this course. Next, we'll head into the Data Preparation portion of this course, where we'll overview data formatting, pandas, dpylr, and more. 
 
 ### 5.1 Resources
 
