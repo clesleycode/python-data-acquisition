@@ -10,19 +10,46 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 	+ [0.2 R & R Studio](#02-r--r-studio)
 	+ [0.3 Virtual Environment](#03-virtual-environment)
 - [1.0 Introduction](#10-introduction)
+	+ [1.1 Data Acquisition](#11-data-acquisition)
+	+ [1.2 Data Preparation](#12-data-preparation)
+	+ [1.3 Data Cleaning](#13-data-cleaning)
 - [2.0 Reading, Writing, and Handling Data Files](#20-reading-writing-and-handling-files)
 	+ [2.1 CSV files](#21-csv-files)
 		* [2.1.1 CSV](#211-csv)
 		* [2.1.2 Pandas](#212-pandas)
+		* [2.1.3 R Programming](#213-r-programming)
 	+ [2.2 JSON](#22-json)
+		* [2.2.1 jsonlite](#221-jsonlite)
 - [3.0 APIs](#30-apis)
 	+ [3.1 GET request](#31-get-request)
 	+ [3.2 Status Codes](#32-status-codes)
+	+ [3.3 APIs with R](#33-apis-with-r)
 - [4.0 Web Scraping](#40-web-scraping)
 	+ [4.1 HTML](#41-html)
 	+ [4.2 BeautifulSoup](#42-beautiful-soup)
-- [5.0 Resources](#50-resources)
-
+	+ [4.3 rvest](#43-rvest)
+- [5.0 Advanced Web Scraping](#50-advanced-web-scraping)
+	+ [5.1 Sitemaps](#51-sitemaps)
+	+ [5.2 Estimating Website Size](#52-estimating-website-size)
+	+ [5.3 Regular Expressions](#53-regular-expressions)
+		* [5.3.1 Simplest Form](#531-simplest-form)
+		* [5.3.2 Case Sensitivity](#532-case-sensitivity)
+		* [5.3.3 Disjunctions](#533-disjunctions)
+		* [5.3.4 Ranges](#534-ranges)
+		* [5.3.5 Exclusions](#535-exclusions)
+		* [5.3.6 Question Marks](#536-question-marks)
+		* [5.3.7 Kleene Star](#537-kleene-star)
+		* [5.3.8 Wildcards](#538-wildcards)
+		* [5.3.9 Kleene+](#539-kleene-+)
+	+ [5.4 REs & BeautifulSoup](#54-res--beautifulsoup)
+	+ [5.5 Lambda Expressions](#55-lambda-expressions)
+- [6.0 Crawling with Scrapy](#60-crawling-with-scrapy)
+	+ [6.1 Scrapy](#61-scrapy)
+	+ [6.2 Extract the Data](#62-extract-the-data)
+	+ [6.3 Expanding](#63-expanding)	
+	+ [6.4 Multiple Pages](#64-multiple-pages)
+- [7.0 Final Words](#70-final-words)
+	+ [7.2 Mini Courses](#72-mini-courses)
 
 ## 0.0 Setup
 
@@ -1024,4 +1051,18 @@ Now, let's run it again! Notice it goes on into 23 pages and 779 sets!
 
 And that's a wrap for the Data Acquisition portion of this course. Next, we'll head into the Data Preparation portion of this course, where we'll overview data formatting, pandas, dpylr, and more. 
 
+### 7.2 Mini Courses
+
+Learn about courses [here](www.byteacademy.co/all-courses/data-science-mini-courses/).
+
+[Python 101: Data Science Prep](https://www.eventbrite.com/e/python-101-data-science-prep-tickets-30980459388) <br>
+[Intro to Data Science & Stats with R](https://www.eventbrite.com/e/data-sci-109-intro-to-data-science-statistics-using-r-tickets-30908877284) <br>
+[Data Acquisition Using Python & R](https://www.eventbrite.com/e/data-sci-203-data-acquisition-using-python-r-tickets-30980705123) <br>
+[Data Visualization with Python](https://www.eventbrite.com/e/data-sci-201-data-visualization-with-python-tickets-30980827489) <br>
+[Fundamentals of Machine Learning and Regression Analysis](https://www.eventbrite.com/e/data-sci-209-fundamentals-of-machine-learning-and-regression-analysis-tickets-30980917759) <br>
+[Natural Language Processing with Data Science](https://www.eventbrite.com/e/data-sci-210-natural-language-processing-with-data-science-tickets-30981006023) <br>
+[Machine Learning with Data Science](https://www.eventbrite.com/e/data-sci-309-machine-learning-with-data-science-tickets-30981154467) <br>
+[Databases & Big Data](https://www.eventbrite.com/e/data-sci-303-databases-big-data-tickets-30981182551) <br>
+[Deep Learning with Data Science](https://www.eventbrite.com/e/data-sci-403-deep-learning-with-data-science-tickets-30981221668) <br>
+[Data Sci 500: Projects](https://www.eventbrite.com/e/data-sci-500-projects-tickets-30981330995)
 
