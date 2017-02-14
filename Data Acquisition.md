@@ -1,7 +1,7 @@
 Data Acquisition with Python & R
 ==================
 
-Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Academy](byteacademy.co) and [ADI](https://adicu.com)
+Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Academy](byteacademy.co), and [ADI](https://adicu.com)
 
 ## Table of Contents
 
@@ -68,6 +68,7 @@ pip3 install json
 pip3 install requests
 pip3 install BeautifulSoup4
 pip3 install scrapy
+pip3 install re
 ```
 
 ### 0.2 R & R Studio
