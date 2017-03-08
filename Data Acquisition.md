@@ -13,7 +13,7 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 	+ [1.1 Data Acquisition](#11-data-acquisition)
 	+ [1.2 Data Preparation](#12-data-preparation)
 	+ [1.3 Data Cleaning](#13-data-cleaning)
-- [2.0 Reading, Writing, and Handling Data Files](#20-reading-writing-and-handling-files)
+- [2.0 Reading, Writing, and Handling Data Files](#20-reading-writing-and-handling-data-files)
 	+ [2.1 CSV files](#21-csv-files)
 		* [2.1.1 CSV](#211-csv)
 		* [2.1.2 Pandas](#212-pandas)
