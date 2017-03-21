@@ -6,8 +6,8 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 ## Table of Contents
 
 - [0.0 Setup](#00-setup)
-	+ [0.1 Python & Pip](#01-python--pip)
-	+ [0.2 R & R Studio](#02-r--r-studio)
+	+ [0.1 Python and Pip](#01-python-and-pip)
+	+ [0.2 R and R Studio](#02-r-and-r-studio)
 	+ [0.3 Virtual Environment](#03-virtual-environment)
 - [1.0 Introduction](#10-introduction)
 	+ [1.1 Data Acquisition](#11-data-acquisition)
@@ -55,7 +55,7 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 
 This guide was written in Python 3.5 and R 3.2.3.
 
-### 0.1 Python & Pip
+### 0.1 Python and Pip
 
 Download [Python](https://www.python.org/downloads/) and [Pip](https://pip.pypa.io/en/stable/installing/).
 
@@ -71,7 +71,7 @@ pip3 install scrapy
 pip3 install re
 ```
 
-### 0.2 R & R Studio
+### 0.2 R and R Studio
 
 Install [R](https://www.r-project.org/) and [R Studio](https://www.rstudio.com/products/rstudio/download/).
 
