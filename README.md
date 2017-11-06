@@ -1,8 +1,6 @@
 Data Acquisition with Python & R
 ==================
 
-Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Academy](byteacademy.co), and [ADI](https://adicu.com)
-
 ## Table of Contents
 
 - [0.0 Setup](#00-setup)
@@ -53,7 +51,7 @@ Brought to you by [Lesley Cordero](http://www.columbia.edu/~lc2958), [Byte Acade
 
 ## 0.0 Setup
 
-This guide was written in Python 3.5 and R 3.2.3.
+This guide was written in Python 3.6 and R 3.2.3.
 
 ### 0.1 Python and Pip
 
@@ -88,22 +86,6 @@ install.packages("jsonlite")
 install.packages("httr") 
 install.packages("rvest")
 ```
-
-### 0.3 Virtual Environment
-
-If you'd like to work in a virtual environment, you can set it up as follows: 
-```
-pip3 install virtualenv
-virtualenv your_env
-```
-And then launch it with: 
-```
-source your_env/bin/activate
-```
-
-Now you should be set up with your virtual environment!
-
-Cool, now we're ready to start! 
 
 ## 1.0 Introduction
 
